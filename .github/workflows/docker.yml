@@ -18,7 +18,7 @@ jobs:
       # uses: docker/build-push-action@9379083e426e2e84abb80c8c091f5cdeb7d3fd7a
       uses: docker/build-push-action@v2.3.0
       with:
-        file: src/WebApp/DockerFile
+        context: src/WebApp
         # List of tags
         tags: hallgeirl/kubedemo-web:1.0
         # Push is a shorthand for --output=type=registry
