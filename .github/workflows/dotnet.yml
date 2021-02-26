@@ -1,0 +1,37 @@
+name: .NET
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+      
+    - name: Build and push Docker images
+      # You may pin to the exact commit or the version.
+      # uses: docker/build-push-action@9379083e426e2e84abb80c8c091f5cdeb7d3fd7a
+      uses: docker/build-push-action@v2.3.0
+      with:
+        file: src/WebApp/DockerFile
+        # List of tags
+        tags: hallgeirl/kubedemo-web:1.0
+        # Push is a shorthand for --output=type=registry
+        push: true
+        # List of output destinations (format: type=local,dest=path)
