@@ -46,6 +46,8 @@ spec:
               path: /
               port: http
           env:
+          - name: ASPNETCORE_HTTPS_PORT
+            value: "443"
           - name: RabbitMQ__Hostname
             value: "{{ .Values.appConfig.rabbitmqHost }}"
           - name: RabbitMQ__Username

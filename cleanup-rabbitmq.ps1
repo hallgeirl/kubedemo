@@ -1,0 +1,1 @@
+helm uninstall --namespace kubedemo rabbitmq
