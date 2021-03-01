@@ -31,7 +31,8 @@ namespace WebApp
                 UserName = Configuration.GetValue<string>("RabbitMQ:Username"),
                 Password = Configuration.GetValue<string>("RabbitMQ:Password"),
             };
-            services.AddSingleton<ConnectionFactory>(x => { return connectionFactory; });
+            var connection = connectionFactory.CreateConnection();
+            services.AddSingleton<IConnection>(x => { return connection; });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

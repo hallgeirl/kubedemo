@@ -17,23 +17,22 @@ namespace WebApp.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private IConfiguration _config;
-        private ConnectionFactory _connectionFactory;
+        private IConnection _connection;
         public int QueueCounter { get; set; }
         
         [BindProperty]
         public int AmountOfWork { get; set; } = 100000;
 
-        public IndexModel(ILogger<IndexModel> logger, IConfiguration config, ConnectionFactory connectionFactory)
+        public IndexModel(ILogger<IndexModel> logger, IConfiguration config, IConnection connection)
         {
             _logger = logger;
             _config = config;
-            _connectionFactory = connectionFactory;
+            _connection = connection;
         }
 
         public void OnGet()
         {
-            using (var connection = _connectionFactory.CreateConnection())
-            using (var channel = connection.CreateModel())
+            using (var channel = _connection.CreateModel())
             {
                 //Get the current queue size
                 var res = channel.QueueDeclare(queue: "WorkerQueue",
@@ -49,8 +48,7 @@ namespace WebApp.Pages
         
         public void OnPostAsync()
         {
-            using (var connection = _connectionFactory.CreateConnection())
-            using (var channel = connection.CreateModel())
+            using (var channel = _connection.CreateModel())
             {
                 channel.ConfirmSelect();
 
