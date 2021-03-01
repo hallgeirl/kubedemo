@@ -4,5 +4,5 @@
 kubectl get pods 
 
 .\deploy-rabbitmq.ps1
-.\deploy.ps1 -Version 1.1
+.\deploy.ps1 -Version 1.2
 

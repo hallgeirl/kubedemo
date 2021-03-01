@@ -16,5 +16,5 @@ if ($BuildDockerImage)
     docker push hallgeirl/kubedemo-worker:1.0
 }
 
-helm package helm/kubedemo-web --version $Version -d helm-output
-helm package helm/kubedemo-worker --version $Version -d helm-output
+helm package helm/kubedemo-web --app-version $Version --version $Version -d helm-output
+helm package helm/kubedemo-worker --app-version $Version --version $Version -d helm-output

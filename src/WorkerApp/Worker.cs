@@ -33,7 +33,11 @@ namespace WorkerApp
         {
             _connection = _connectionFactory.CreateConnection();
             _channel = _connection.CreateModel();
-            _channel.QueueDeclare(QueueName);
+            _channel.QueueDeclare(queue: "WorkerQueue",
+                     durable: false,
+                     exclusive: false,
+                     autoDelete: false,
+                     arguments: null);
             _channel.BasicQos(0, 1, false);
             _logger.LogInformation($"Queue [{QueueName}] is waiting for messages.");
 
