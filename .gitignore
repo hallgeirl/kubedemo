@@ -2,11 +2,11 @@ src/WebApp/bin
 src/WebApp/obj
 src/WorkerApp/bin
 src/WorkerApp/obj
+/src/AppModels/obj
+/src/AppModels/bin
 
 # helm packages
 helm-output
 *~
 
 */.vs
-/src/AppModels/obj
-/src/AppModels/bin/Debug/netstandard2.0

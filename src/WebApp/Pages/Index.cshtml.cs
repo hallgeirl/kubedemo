@@ -19,6 +19,10 @@ namespace WebApp.Pages
         private IConfiguration _config;
         private ConnectionFactory _connectionFactory;
         public int QueueCounter { get; set; }
+        
+        [BindProperty]
+        public int AmountOfWork { get; set; } = 100000;
+
         public IndexModel(ILogger<IndexModel> logger, IConfiguration config, ConnectionFactory connectionFactory)
         {
             _logger = logger;
@@ -42,18 +46,21 @@ namespace WebApp.Pages
             }
         }
 
-        public async Task OnPostAsync()
+        
+        public void OnPostAsync()
         {
             using (var connection = _connectionFactory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
+                channel.ConfirmSelect();
+
                 channel.QueueDeclare(queue: "WorkerQueue",
                                      durable: false,
                                      exclusive: false,
                                      autoDelete: false,
                                      arguments: null);
 
-                var workItem = new WorkItem() { Name = "Work_" + Guid.NewGuid().ToString(), AmountOfWork = 100000 };
+                var workItem = new WorkItem() { Name = "Work_" + Guid.NewGuid().ToString(), AmountOfWork = AmountOfWork };
                 string message = JsonSerializer.Serialize(workItem);
                 var body = Encoding.UTF8.GetBytes(message);
 
@@ -61,6 +68,8 @@ namespace WebApp.Pages
                                      routingKey: "WorkerQueue",
                                      basicProperties: null,
                                      body: body);
+
+                channel.WaitForConfirms();
 
                 //Get the current queue size
                 var res = channel.QueueDeclare(queue: "WorkerQueue",
