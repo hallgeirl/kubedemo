@@ -39,7 +39,7 @@ spec:
               protocol: TCP
           readinessProbe:
             httpGet:
-              path: /
+              path: /Privacy
               port: http
           env:
           - name: ASPNETCORE_HTTPS_PORT

@@ -1,7 +1,7 @@
 .\cleanup-rabbitmq.ps1
 .\cleanup.ps1;
 
-kubectl get pods 
+kubectl top pod; kubectl get pods
 
 .\deploy-rabbitmq.ps1
 .\deploy.ps1 -Version 1.2
