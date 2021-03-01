@@ -45,6 +45,16 @@ spec:
             httpGet:
               path: /
               port: http
+          env:
+          - name: RabbitMQ__Hostname
+            value: "{{ .Values.appConfig.rabbitmqHost }}"
+          - name: RabbitMQ__Username
+            value: "{{ .Values.appConfig.rabbitmqUser }}"
+          - name: RabbitMQ__Password
+            valueFrom:
+                secretKeyRef:
+                  name: "{{ include "kubedemo-web.fullname" . }}"
+                  key: rabbitmqPassword
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
