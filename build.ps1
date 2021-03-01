@@ -1,6 +1,7 @@
 param
 (
-    [switch]$BuildDockerImage
+    [switch]$BuildDockerImage,
+    $Version = "1.0"
 )
 
 if ($BuildDockerImage)
@@ -15,5 +16,5 @@ if ($BuildDockerImage)
     docker push hallgeirl/kubedemo-worker:1.0
 }
 
-helm package helm/kubedemo-web --version 1.0 -d helm-output
-helm package helm/kubedemo-worker --version 1.0 -d helm-output
+helm package helm/kubedemo-web --version $Version -d helm-output
+helm package helm/kubedemo-worker --version $Version -d helm-output
