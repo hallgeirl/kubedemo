@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RabbitMQ.Client;
 
 namespace WebApp
 {
@@ -24,6 +25,13 @@ namespace WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            var connectionFactory = new ConnectionFactory()
+            {
+                HostName = Configuration.GetValue<string>("RabbitMQ:Hostname"),
+                UserName = Configuration.GetValue<string>("RabbitMQ:Username"),
+                Password = Configuration.GetValue<string>("RabbitMQ:Password"),
+            };
+            services.AddSingleton<ConnectionFactory>(x => { return connectionFactory; });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -6,3 +6,7 @@ src/WorkerApp/obj
 # helm packages
 helm-output
 *~
+
+*/.vs
+/src/AppModels/obj
+/src/AppModels/bin/Debug/netstandard2.0
