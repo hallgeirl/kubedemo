@@ -3,7 +3,7 @@ WORKDIR /source
 
 COPY . ./
 RUN dotnet restore
-RUN dotnet publish -c release -o /app --no-restore WorkerApp
+RUN dotnet publish -c release -o /app --no-restore
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/runtime:5.0
